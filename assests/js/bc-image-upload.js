@@ -2,7 +2,7 @@ jQuery(document).ready(function (jQuery) {
   // Instantiates the variable that holds the media library frame.
   var meta_image_frame;
   // Runs when the image button is clicked.
-  jQuery('.bc-testimonial-image-upload').click(function (e) {
+  jQuery('.bc-affiliation-image-upload').click(function (e) {
     // Get preview pane
     var meta_image_preview = jQuery(this).parent().children('.image-preview');
     // Prevents the default action from occuring.
@@ -32,7 +32,7 @@ jQuery(document).ready(function (jQuery) {
     meta_image_frame.open();
   });
 
-  jQuery('.bc-testimonial-image-remove').click(function (e) {
+  jQuery('.bc-affiliation-image-remove').click(function (e) {
     // Get preview pane
     var meta_image_preview = jQuery(this).parent().children('.image-preview');
     // Prevents the default action from occuring.

@@ -1,21 +1,21 @@
 <?php
-function bc_testimonial_register_testimonial_type() {
+function bc_affiliation_register_affiliation_type() {
     $labels = array( 
-        'name' => __( 'Testimonials', BCTESTIMONIALDOMAIN ),
-        'singular_name' => __( 'Testimonial', BCTESTIMONIALDOMAIN ),
-        'archives' => __( 'Testimonials', BCTESTIMONIALDOMAIN ),
-        'add_new' => __( 'Add New Testimonial', BCTESTIMONIALDOMAIN ),
-        'add_new_item' => __( 'Add New Testimonial', BCTESTIMONIALDOMAIN ),
+        'name' => __( 'Affiliation', BCAFFILIATIONDOMAIN ),
+        'singular_name' => __( 'Affiliation', BCAFFILIATIONDOMAIN ),
+        'archives' => __( 'Affiliation', BCAFFILIATIONDOMAIN ),
+        'add_new' => __( 'Add New Affiliation', BCAFFILIATIONDOMAIN ),
+        'add_new_item' => __( 'Add New Affiliation', BCAFFILIATIONDOMAIN ),
     );
 
     $args = array( 
         'labels' => $labels,
         'public' => true,
-        'has_archive' => 'testimonial',
+        'has_archive' => 'affiliation',
         'rewrite' => array( 'has_front' => true ),
-        'menu_icon' => 'dashicons-format-quote',
+        'menu_icon' => 'dashicons-groups',
         'supports' => false,
         'show_in_rest' => true,
     );
-    register_post_type( 'bc_testimonials', $args );
+    register_post_type( 'bc_affiliations', $args );
 }
