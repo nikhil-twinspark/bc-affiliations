@@ -40,9 +40,9 @@ $image = get_post_meta( $post->ID, 'affiliation_custom_image', true );
 
         <div class="image-preview col-sm-3" style="float: right;margin-right: 30%;">
             <?php if(isset($image) && !empty($image)){?>
-            <img src="<?php echo $image;?>" class="rounded-circle" style="width: 90px; height: 90px;">
+            <img src="<?php echo $image;?>" class="" style="width: 150px; height: 90px;">
             <?php }else{?>
-            <img src="http://placehold.it/150x150" class="rounded-circle" style="width: 90px; height: 90px;"/>
+            <img src="http://placehold.it/150x150" class="" style="width: 90px; height: 90px;"/>
             <?php }?>
         </div>
     </div>
