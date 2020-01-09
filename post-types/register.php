@@ -1,7 +1,7 @@
 <?php
 function bc_affiliation_register_affiliation_type() {
     $labels = array( 
-        'name' => __( 'Affiliation', BCAFFILIATIONDOMAIN ),
+        'name' => __( 'Affiliations', BCAFFILIATIONDOMAIN ),
         'singular_name' => __( 'Affiliation', BCAFFILIATIONDOMAIN ),
         'archives' => __( 'Affiliation', BCAFFILIATIONDOMAIN ),
         'add_new' => __( 'Add New Affiliation', BCAFFILIATIONDOMAIN ),
