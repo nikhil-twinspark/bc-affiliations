@@ -33,16 +33,16 @@ $image = get_post_meta( $post->ID, 'affiliation_custom_image', true );
   </div>
 
   <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Icon</label>
+    <label class="col-sm-2 col-form-label">Logo</label>
     <div class="col-sm-10">
         <input type="text" name="affiliation_custom_image" id="" class="meta-image col-sm-2" value="<?= $image;?>" required accept='image/*'>
         <input type="button" class="button bc-affiliation-image-upload col-sm-3" value="Upload">
 
         <div class="image-preview col-sm-3" style="float: right;margin-right: 30%;">
             <?php if(isset($image) && !empty($image)){?>
-            <img src="<?php echo $image;?>" class="" style="width: 150px; height: 90px;">
+            <img src="<?php echo $image;?>" style="width: 200px;">
             <?php }else{?>
-            <img src="http://placehold.it/150x150" class="" style="width: 90px; height: 90px;"/>
+            <img src="http://placehold.it/150x150" style="width: 90px; height: 90px;"/>
             <?php }?>
         </div>
     </div>
