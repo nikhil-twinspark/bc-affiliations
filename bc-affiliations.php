@@ -50,50 +50,86 @@ function bc_affiliation_include_css_js($hook){
     } 
 }
 
+add_action( 'wp_enqueue_scripts', 'bc_affiliation_include_css_frontend' );
+function bc_affiliation_include_css_frontend($hook){
+    wp_register_style('bc-affiliation-greyscale', plugins_url('assests/css/bc-affiliation-style.css', __FILE__), array(), '1.0.0', 'all');
+    wp_enqueue_style('bc-affiliation-greyscale');
+}
+
 add_shortcode( 'bc-affiliation', 'bc_affiliation_shortcode' );
 function bc_affiliation_shortcode( $atts , $content = null ) {
-    $args  = array( 'post_type' => 'bc_affiliations', 'posts_per_page' => -1, 'order'=> 'DESC','post_status'  => 'publish');
-
-    if(isset($atts['withoutgrayscale']) && $atts['withoutgrayscale'] == '1' ) { ?>
-        <style type="text/css">
-        /*.bc_affliations_img {-webkit-filter: grayscale(0) !important;filter: grayscale(0)!important;}
-        .bc_affliations_img:hover {-webkit-filter: grayscale(0) !important;filter: grayscale(0)!important;}*/
-
-        .bc_affliations_img {
-            filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
-            filter: gray; /* IE6-9 */
-            -webkit-filter: grayscale(0%) !important; /* Chrome 19+, Safari 6+, Safari 6+ iOS */
-        }
-        .bc_affliations_img:hover {
-            filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
-            filter: gray; /* IE6-9 */
-            -webkit-filter: grayscale(0%) !important; /* Chrome 19+, Safari 6+, Safari 6+ iOS */
-        }
-
-
-
-        </style>
-    <?php }
-    $query = new WP_Query( $args );
-        if ( $query->have_posts() ) :
-        while($query->have_posts()) : $query->the_post();
-
-        $name = get_post_meta( get_the_ID(), 'affiliation_name', true );
-        $link = get_post_meta( get_the_ID(), 'affiliation_link', true );
-        $image = get_post_meta( get_the_ID(), 'affiliation_custom_image', true );
+    static $count = 0;
+    $count++;
+    add_action( 'wp_footer' , function() use($count){
     ?>
-        <div class="swiper-slide">
-            <div class='text-center'>
-                <a href="<?= $link?>" target="_blank"><img class="img-fluid bc_affliations_img" alt="bbblogo" src="<?= $image;?>"></a>
-            </div>
-        </div>
+        <script>
+        var swiper = new Swiper('#bc_affiliation_swiper_<?php echo $count ?>', {
+            slidesPerView: 4,
+            spaceBetween: 32,
+            slidesPerGroup: 4,
+            loop: true,
+            loopFillGroupWithBlank: true,
+            breakpoints: {
+                // when window width is <= 320px
+                320: {slidesPerView: 1},
+                // when window width is <= 480px
+                480: {slidesPerView: 2},
+                // when window width is <= 640px
+                640: {slidesPerView: 2},
+                // when window width is <= 768px
+                768: {slidesPerView: 3},
+                1000: {slidesPerView: 4}
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: false,
+            },
+            navigation: {
+                nextEl: '.af-swiper-button-next',
+                prevEl: '.af-swiper-button-prev',
+            },
+        });
+        </script>
+    <?php });?>
     
-    <?php
-    endwhile; 
-    wp_reset_query();
-    endif;
-    ?>
+    <?php $args  = array( 'post_type' => 'bc_affiliations', 'posts_per_page' => -1, 'order'=> 'DESC','post_status'  => 'publish');
 
+    /*$selector = ".bc_affiliation_swiper";
+    $swiperId = false;
+    if(isset($atts['id']) && !empty($atts['id'])) {
+        $selector = '#'.$atts['id'];
+        $swiperId = $atts['id'];
+    }*/
+    $colorclass = 'bc_affliations_img';
+    if(isset($atts['withoutgrayscale']) && $atts['withoutgrayscale'] == '1' ) {
+        $colorclass = 'bc_affliations_img_without_grayscale';
+     }
+    ?>
+    <div id="bc_affiliation_swiper_<?php echo $count;?>" class="swiper-container bc_affiliation_swiper container mb-5">
+        <div class="swiper-wrapper">
+            <?php 
+            $query = new WP_Query( $args );
+                if ( $query->have_posts() ) :
+                while($query->have_posts()) : $query->the_post();
+
+                $name = get_post_meta( get_the_ID(), 'affiliation_name', true );
+                $link = get_post_meta( get_the_ID(), 'affiliation_link', true );
+                $image = get_post_meta( get_the_ID(), 'affiliation_custom_image', true );
+            ?>
+                <div class="swiper-slide">
+                    <div class='text-center'>
+                        <a href="<?= $link?>" target="_blank"><img class="img-fluid <?php echo $colorclass; ?>" alt="bbblogo" src="<?= $image;?>"></a>
+                    </div>
+                </div>
+            <?php
+            endwhile; 
+            wp_reset_query();
+            endif;
+            ?>
+        </div>
+        <div class="af-swiper-button-next swiper-button-next d-none d-lg-block"><em class="fa fa-angle-right"></em></div>
+        <div class="af-swiper-button-prev swiper-button-prev d-none d-lg-block"><em class="fa fa-angle-left"></em></div>
+    </div>
 <?php }
 
 // Admin notice for displaying shortcode on index page
