@@ -16,6 +16,7 @@ function bc_affiliation_register_affiliation_type() {
         'menu_icon' => 'dashicons-groups',
         'supports' => false,
         'show_in_rest' => true,
+        'publicly_queryable' => false,
     );
     register_post_type( 'bc_affiliations', $args );
 }
