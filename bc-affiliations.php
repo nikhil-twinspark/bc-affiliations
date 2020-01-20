@@ -66,7 +66,6 @@ function bc_affiliation_shortcode( $atts , $content = null ) {
         var swiper = new Swiper('#bc_affiliation_swiper_<?php echo $count ?>', {
             slidesPerView: 4,
             spaceBetween: 32,
-            slidesPerGroup: 4,
             loop: true,
             loopFillGroupWithBlank: true,
             breakpoints: {
