@@ -103,33 +103,46 @@ function bc_affiliation_shortcode( $atts , $content = null ) {
     if(isset($atts['withoutgrayscale']) && $atts['withoutgrayscale'] == '1' ) {
         $colorclass = 'bc_affliations_img_without_grayscale';
      }
-    ?>
-    <div id="bc_affiliation_swiper_<?php echo $count;?>" class="swiper-container bc_affiliation_swiper container mb-5">
-        <div class="swiper-wrapper">
-            <?php 
-            $query = new WP_Query( $args );
-                if ( $query->have_posts() ) :
-                while($query->have_posts()) : $query->the_post();
+     ob_start();
 
-                $name = get_post_meta( get_the_ID(), 'affiliation_name', true );
-                $link = get_post_meta( get_the_ID(), 'affiliation_link', true );
-                $image = get_post_meta( get_the_ID(), 'affiliation_custom_image', true );
-            ?>
-                <div class="swiper-slide">
-                    <div class='text-center'>
-                        <a href="<?= $link?>" target="_blank"><img class="img-fluid <?php echo $colorclass; ?>" alt="bbblogo" src="<?= $image;?>"></a>
+    ?>
+<div class="container-fluid ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 m-auto text-center">
+                <h2 class="text-center mb-5 mt-5 bc_font_alt_1 text-capitalize">Affiliations</h2>
+                <div id="bc_affiliation_swiper_<?php echo $count;?>" class="swiper-container bc_affiliation_swiper container mb-5">
+                    <div class="swiper-wrapper">
+                        <?php 
+                        $query = new WP_Query( $args );
+                        if ( $query->have_posts() ) :
+                        while($query->have_posts()) : $query->the_post();
+                        $name = get_post_meta( get_the_ID(), 'affiliation_name', true );
+                        $link = get_post_meta( get_the_ID(), 'affiliation_link', true );
+                        $image = get_post_meta( get_the_ID(), 'affiliation_custom_image', true );
+                        ?>
+                        <div class="swiper-slide">
+                            <div class='text-center'>
+                                <a href="<?= $link?>" target="_blank"><img class="img-fluid <?php echo $colorclass; ?>" alt="bbblogo" src="<?= $image;?>"></a>
+                            </div>
+                        </div>
+                        <?php
+                        endwhile; 
+                        wp_reset_query();
+                        endif;
+                        ?>
                     </div>
+                    <div class="af-swiper-button-next swiper-button-next d-none d-lg-block"><em class="fa fa-angle-right"></em></div>
+                    <div class="af-swiper-button-prev swiper-button-prev d-none d-lg-block"><em class="fa fa-angle-left"></em></div>
                 </div>
-            <?php
-            endwhile; 
-            wp_reset_query();
-            endif;
-            ?>
+            </div>
         </div>
-        <div class="af-swiper-button-next swiper-button-next d-none d-lg-block"><em class="fa fa-angle-right"></em></div>
-        <div class="af-swiper-button-prev swiper-button-prev d-none d-lg-block"><em class="fa fa-angle-left"></em></div>
     </div>
-<?php }
+</div>
+<?php 
+$output = ob_get_clean();
+return $output;
+}
 
 // Admin notice for displaying shortcode on index page
 add_action('admin_notices', 'bc_affiliation_general_admin_notice');
