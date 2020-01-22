@@ -72,7 +72,7 @@ function bc_affiliation_shortcode( $atts , $content = null ) {
                 // when window width is <= 320px
                 320: {slidesPerView: 1},
                 // when window width is <= 480px
-                480: {slidesPerView: 2},
+                480: {slidesPerView: 1},
                 // when window width is <= 640px
                 640: {slidesPerView: 2},
                 // when window width is <= 768px
